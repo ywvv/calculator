@@ -2,34 +2,33 @@ package com.example.calculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import com.example.calculator.databinding.ActivityMainBinding
 import com.ezylang.evalex.Expression
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) = with(binding) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val buttonsList = listOf(
-            binding.bZero,
-            binding.bOne,
-            binding.bTwo,
-            binding.bThree,
-            binding.bFour,
-            binding.bFive,
-            binding.bSix,
-            binding.bSeven,
-            binding.bEight,
-            binding.bNine,
-            binding.bPoint,
-            binding.bPlus,
-            binding.bMinus,
-            binding.bMultiply,
-            binding.bDivide
+            bZero,
+            bOne,
+            bTwo,
+            bThree,
+            bFour,
+            bFive,
+            bSix,
+            bSeven,
+            bEight,
+            bNine,
+            bPoint,
+            bPlus,
+            bMinus,
+            bMultiply,
+            bDivide
         )
 
         val numberStringBuilder = StringBuilder()
@@ -37,15 +36,15 @@ class MainActivity : AppCompatActivity() {
         buttonsList.forEach { button ->
             button.setOnClickListener {
                 numberStringBuilder.append(button.text)
-                binding.tvResult.text = numberStringBuilder
+                tvResult.text = numberStringBuilder
             }
         }
 
-        binding.bEqual.setOnClickListener {
+        bEqual.setOnClickListener {
             try {
-                val expression = Expression(binding.tvResult.text.toString())
+                val expression = Expression(tvResult.text.toString())
                 val expressionResult = expression.evaluate().numberValue.toInt().toString()
-                binding.tvResult.text = expressionResult
+                tvResult.text = expressionResult
                 numberStringBuilder.clear()
                 numberStringBuilder.append(expressionResult)
             } catch (t: Throwable) {
@@ -53,14 +52,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.bClear.setOnClickListener {
-            binding.tvResult.text = "0"
+        bClear.setOnClickListener {
+            tvResult.text = "0"
             numberStringBuilder.clear()
         }
 
-        binding.bBack.setOnClickListener {
+        bBack.setOnClickListener {
             numberStringBuilder.deleteCharAt(numberStringBuilder.lastIndex)
-            binding.tvResult.text = numberStringBuilder
+            tvResult.text = numberStringBuilder
         }
     }
 }
