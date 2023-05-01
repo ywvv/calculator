@@ -2,6 +2,7 @@ package com.example.calculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.calculator.databinding.ActivityMainBinding
 import com.ezylang.evalex.Expression
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding.bEqual.setOnClickListener {
             try {
                 val expression = Expression(binding.tvResult.text.toString())
-                val expressionResult = expression.evaluate().numberValue.toString()
+                val expressionResult = expression.evaluate().numberValue.toInt().toString()
                 binding.tvResult.text = expressionResult
                 numberStringBuilder.clear()
                 numberStringBuilder.append(expressionResult)
