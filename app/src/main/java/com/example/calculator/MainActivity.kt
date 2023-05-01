@@ -2,6 +2,7 @@ package com.example.calculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.example.calculator.databinding.ActivityMainBinding
 import com.ezylang.evalex.Expression
 
@@ -22,16 +23,17 @@ class MainActivity : AppCompatActivity() {
             binding.bSix,
             binding.bSeven,
             binding.bEight,
-            binding.bSeven,
+            binding.bNine,
             binding.bPoint,
             binding.bPlus,
             binding.bMinus,
-            binding.bMultiply
+            binding.bMultiply,
+            binding.bDivide
         )
 
         val numberStringBuilder = StringBuilder()
 
-        buttonsList.forEach { button->
+        buttonsList.forEach { button ->
             button.setOnClickListener {
                 numberStringBuilder.append(button.text)
                 binding.tvResult.text = numberStringBuilder
@@ -39,8 +41,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.bEqual.setOnClickListener {
-            val expression = Expression(binding.tvResult.text.toString())
-            binding.tvResult.text = expression.evaluate().numberValue.toString()
+            try {
+                val expression = Expression(binding.tvResult.text.toString())
+                val expressionResult = expression.evaluate().numberValue.toString()
+                binding.tvResult.text = expressionResult
+                numberStringBuilder.clear()
+                numberStringBuilder.append(expressionResult)
+            } catch (t: Throwable) {
+                Toast.makeText(this@MainActivity, "Exception: $t", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        binding.bClear.setOnClickListener {
+            binding.tvResult.text = "0"
             numberStringBuilder.clear()
         }
     }
