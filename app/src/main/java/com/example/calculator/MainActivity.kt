@@ -8,11 +8,16 @@ import com.ezylang.evalex.Expression
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) = with(binding) {
+    private val numberStringBuilder = StringBuilder()
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setListeners()
+    }
+
+    private fun setListeners() = with(binding) {
         val buttonsList = listOf(
             bZero,
             bOne,
@@ -31,7 +36,6 @@ class MainActivity : AppCompatActivity() {
             bDivide
         )
 
-        val numberStringBuilder = StringBuilder()
 
         buttonsList.forEach { button ->
             button.setOnClickListener {
@@ -41,15 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         bEqual.setOnClickListener {
-            try {
-                val expression = Expression(tvResult.text.toString())
-                val expressionResult = expression.evaluate().numberValue.toInt().toString()
-                tvResult.text = expressionResult
-                numberStringBuilder.clear()
-                numberStringBuilder.append(expressionResult)
-            } catch (t: Throwable) {
-                Toast.makeText(this@MainActivity, "Exception: $t", Toast.LENGTH_LONG).show()
-            }
+            calculate()
         }
 
         bClear.setOnClickListener {
@@ -60,6 +56,18 @@ class MainActivity : AppCompatActivity() {
         bBack.setOnClickListener {
             numberStringBuilder.deleteCharAt(numberStringBuilder.lastIndex)
             tvResult.text = numberStringBuilder
+        }
+    }
+
+    private fun ActivityMainBinding.calculate() {
+        try {
+            val expression = Expression(tvResult.text.toString())
+            val expressionResult = expression.evaluate().numberValue.toInt().toString()
+            tvResult.text = expressionResult
+            numberStringBuilder.clear()
+            numberStringBuilder.append(expressionResult)
+        } catch (t: Throwable) {
+            Toast.makeText(this@MainActivity, "Exception: $t", Toast.LENGTH_LONG).show()
         }
     }
 }
