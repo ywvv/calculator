@@ -160,4 +160,13 @@
         app:layout_constraintLeft_toRightOf="@id/bClear"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <Button
+        android:id="@+id/bBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        app:layout_constraintBottom_toTopOf="@+id/bDivide"
+        app:layout_constraintLeft_toLeftOf="@id/bDivide"
+        app:layout_constraintRight_toRightOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

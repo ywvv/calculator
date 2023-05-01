@@ -56,5 +56,10 @@ class MainActivity : AppCompatActivity() {
             binding.tvResult.text = "0"
             numberStringBuilder.clear()
         }
+
+        binding.bBack.setOnClickListener {
+            numberStringBuilder.deleteCharAt(numberStringBuilder.lastIndex)
+            binding.tvResult.text = numberStringBuilder
+        }
     }
 }
